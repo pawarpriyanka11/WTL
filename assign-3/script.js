@@ -1,0 +1,47 @@
+let dic=document.querySelector(".result");
+        
+        //create table and append that data in table dynamically
+        function appendData(arr)
+        {
+           let table1 = document.createElement("table");
+            table1.border = 1;
+
+            // Create header row
+            let row1 = document.createElement("tr");
+            let k = Object.keys(arr[0]);
+            for (let i = 0; i < k.length; i++) {
+                let cell = document.createElement("th");
+                cell.textContent = k[i];
+                row1.append(cell);
+            }
+            table1.append(row1);
+
+            // Create data rows
+            for (let obj of arr) {
+                let row = document.createElement("tr");
+                for (let key of k) {
+                    let cell = document.createElement("td");
+                    cell.textContent = obj[key];
+                    row.append(cell);
+                }
+                table1.append(row);
+            }
+
+            // Add table to body
+            dic.innerHTML = "";
+            dic.append(table1);
+        }
+
+        //fetch
+        async function getData()
+        {
+           let result=await fetch("https://jsonplaceholder.typicode.com/todos");
+           let p1= await result.json();
+           appendData(p1);
+        }
+
+        //add event listener
+        document.getElementById('btn1').addEventListener("click",()=>
+        {
+            getData();
+        });
